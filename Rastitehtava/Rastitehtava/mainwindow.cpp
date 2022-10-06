@@ -35,15 +35,14 @@ void MainWindow::GetCarSlot(QNetworkReply *reply)
 
 void MainWindow::on_GetCars_clicked()
 {
-
     QString site_url="http://localhost:3000/car";
     QNetworkRequest request((site_url));
-    //BASIC AUTENTIKOINTI ALKAA
+    //BASIC AUTENTIKOINTI ALKU
     QString credentials="root:root";
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
-    //BASIC AUTENTIKOINTI LOPPUU
+    //BASIC AUTENTIKOINTI LOPPU
 
     getManager = new QNetworkAccessManager(this);
 
@@ -54,11 +53,10 @@ void MainWindow::on_GetCars_clicked()
 
 void MainWindow::updateCarSlot(QNetworkReply *reply)
 {
-
-        response_data=reply->readAll();
-        qDebug()<<response_data;
-        reply->deleteLater();
-        putManager->deleteLater();
+    response_data=reply->readAll();
+    qDebug()<<response_data;
+    reply->deleteLater();
+    putManager->deleteLater();
 
 }
 
@@ -80,14 +78,9 @@ void MainWindow::DeleteCarSlot(QNetworkReply *reply)
 
 void MainWindow::on_btngetcar_clicked()
 {
-   // QString Brand = ui->textEdit->toPlainText();
-   // ui->CarBrand->setText("brand" +Brand);            //Ei toimi vielä
-   //QString Model = ui->textEdit->toPlainText();
-   //  ui->CarModel->setText("model" +Model);
     QJsonObject jsonObj;
     jsonObj.insert("brand","Uusi Brand");
     jsonObj.insert("model","Uusi Model");
-
 
     QString site_url="http://localhost:3000/car";
     QNetworkRequest request((site_url));
@@ -105,23 +98,21 @@ void MainWindow::on_btngetcar_clicked()
     reply = postManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-
 void MainWindow::on_pushButton_clicked()
 {
     QJsonObject jsonObj;
     jsonObj.insert("brand","Muokattu Brand");
     jsonObj.insert("model","Muokattu Model");
 
-
     QString site_url="http://localhost:3000/car/8";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, QString("application/json"));
-    //BASIC AUTENTIKOINTI ALKAA
+    //BASIC AUTENTIKOINTI ALKU
     QString credentials="root:root";
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
-    //BASIC AUTENTIKOINTI LOPPUU
+    //BASIC AUTENTIKOINTI LOPPU
 
     putManager = new QNetworkAccessManager(this);
     connect(putManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(updateCarSlot(QNetworkReply*)));
@@ -135,12 +126,12 @@ void MainWindow::on_DeleteCar_clicked()
 
     QString site_url="http://localhost:3000/car/8";
     QNetworkRequest request((site_url));
-    //BASIC AUTENTIKOINTI ALKAA
+    //BASIC AUTENTIKOINTI ALKU
     QString credentials="root:root";
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
-    //BASIC AUTENTIKOINTI LOPPUU
+    //BASIC AUTENTIKOINTI LOPPU
     deleteResource = new QNetworkAccessManager(this);
 
     connect(deleteResource, SIGNAL(finished(QNetworkReply*)), this, SLOT(DeleteCarSlot(QNetworkReply*)));
