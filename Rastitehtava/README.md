@@ -1,6 +1,6 @@
 KÄYTTÖ:
-myapi
-npm start
+myapi npm start
+start mysql
 käynnistä Qt sovellus
 
 
